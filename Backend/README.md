@@ -365,7 +365,7 @@ This endpoint authenticates a captain and returns a JWT token.
 - **Headers:**  
   `Content-Type: application/json`
 
-- **Body:**  
+- **Body:**
   ```json
   {
     "email": "jane.smith@example.com", // required, valid email format
