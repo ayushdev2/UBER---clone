@@ -251,3 +251,97 @@ This endpoint logs out the authenticated user.
 
 - Ensure the `JWT_SECRET` environment variable is configured correctly for JWT generation.
 - Logging out invalidates the token, enhancing security.
+
+---
+
+## POST /captains/register
+
+This endpoint registers a new captain (driver) in the system.
+
+### Description
+
+- Validates incoming data using express-validator.
+- Hashes the captain's password before storing it.
+- Stores captain and vehicle details in the database.
+- Returns a JWT token and captain details on success.
+
+### Request
+
+- **Method:** POST
+- **Endpoint:** `/captains/register`
+- **Headers:**  
+  `Content-Type: application/json`
+
+- **Body:**  
+  The request body should be in JSON format with the following structure:
+
+  ```json
+  {
+    "fullname": {
+      "firstname": "Jane", // required, minimum 3 characters
+      "lastname": "Smith" // required, minimum 3 characters
+    },
+    "email": "jane.smith@example.com", // required, valid email format
+    "password": "securePassword", // required, minimum 6 characters
+    "vehicle": {
+      "color": "Red", // required
+      "plate": "ABC123", // required, unique
+      "capacity": 4, // required, minimum 1
+      "vehicleType": "car" // required, one of: car, motorcycle, auto
+    }
+  }
+  ```
+
+### Response
+
+- **Success (201 Created):**
+
+  ```json
+  {
+    "token": "JWT_TOKEN_HERE",
+    "captain": {
+      "_id": "captain_id",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Smith"
+      },
+      "email": "jane.smith@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+      // other captain fields
+    }
+  }
+  ```
+
+- **Error (400 Bad Request):**
+
+  Returned when input validation fails or required fields are missing.
+
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "Field name",
+        "location": "body"
+      }
+      // ...additional errors if applicable
+    ]
+  }
+  ```
+
+### Status Codes
+
+- **201:** Captain successfully registered.
+- **400:** Input validation failed or required fields are missing.
+
+### Additional Notes
+
+- Password is securely hashed before storing.
+- Email and vehicle plate must be unique.
+- Vehicle type must be one of: car, motorcycle, auto.
+- Ensure the `JWT_SECRET` environment variable is configured
