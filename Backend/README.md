@@ -152,4 +152,102 @@ This endpoint authenticates a user and returns a JWT token.
 ### Additional Notes
 
 - Ensure the `JWT_SECRET` environment variable is configured correctly for JWT generation.
-- Password is compared
+- Password is compared using bcrypt, ensuring security.
+
+---
+
+## GET /users/profile
+
+This endpoint returns the authenticated user's profile information.
+
+### Description
+
+- Requires a valid JWT token (sent via cookie or `Authorization` header).
+- Returns the user data associated with the token.
+
+### Request
+
+- **Method:** GET
+- **Endpoint:** `/users/profile`
+- **Headers:**  
+  `Authorization: Bearer <JWT_TOKEN>`  
+  or  
+  Cookie: `token=<JWT_TOKEN>`
+
+### Response
+
+- **Success (200 OK):**
+
+  ```json
+  {
+    "_id": "user_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+    // other user fields
+  }
+  ```
+
+- **Error (401 Unauthorized):**
+
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+### Status Codes
+
+- **200:** User profile returned.
+- **401:** Invalid or missing authentication token.
+
+---
+
+## GET /users/logout
+
+This endpoint logs out the authenticated user.
+
+### Description
+
+- Requires a valid JWT token (sent via cookie or `Authorization` header).
+- Blacklists the token so it cannot be used again.
+- Clears the authentication cookie.
+
+### Request
+
+- **Method:** GET
+- **Endpoint:** `/users/logout`
+- **Headers:**  
+  `Authorization: Bearer <JWT_TOKEN>`  
+  or  
+  Cookie: `token=<JWT_TOKEN>`
+
+### Response
+
+- **Success (200 OK):**
+
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+
+- **Error (401 Unauthorized):**
+
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+### Status Codes
+
+- **200:** User logged out successfully.
+- **401:** Invalid or missing authentication token.
+
+### Additional Notes
+
+- Ensure the `JWT_SECRET` environment variable is configured correctly for JWT generation.
+- Logging out invalidates the token, enhancing security.
