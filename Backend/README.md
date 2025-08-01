@@ -344,4 +344,181 @@ This endpoint registers a new captain (driver) in the system.
 - Password is securely hashed before storing.
 - Email and vehicle plate must be unique.
 - Vehicle type must be one of: car, motorcycle, auto.
-- Ensure the `JWT_SECRET` environment variable is configured
+- Ensure the `JWT_SECRET` environment variable is configured for JWT generation.
+
+---
+
+## POST /captains/login
+
+This endpoint authenticates a captain and returns a JWT token.
+
+### Description
+
+- Validates the incoming data using express-validator.
+- Checks if the captain exists and the password matches.
+- Returns a JWT token and captain details on successful login.
+
+### Request
+
+- **Method:** POST
+- **Endpoint:** `/captains/login`
+- **Headers:**  
+  `Content-Type: application/json`
+
+- **Body:**  
+  ```json
+  {
+    "email": "jane.smith@example.com", // required, valid email format
+    "password": "securePassword" // required
+  }
+  ```
+
+### Response
+
+- **Success (200 OK):**
+
+  ```json
+  {
+    "token": "JWT_TOKEN_HERE",
+    "captain": {
+      // Captain details as returned by the system
+    }
+  }
+  ```
+
+- **Error (400 Bad Request):**
+
+  Returned when input validation fails.
+
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "Field name",
+        "location": "body"
+      }
+      // ...additional errors if applicable
+    ]
+  }
+  ```
+
+- **Error (401 Unauthorized):**
+
+  Returned when email or password is incorrect.
+
+  ```json
+  {
+    "message": "Invalid email or password"
+  }
+  ```
+
+### Status Codes
+
+- **200:** Captain successfully logged in.
+- **400:** Input validation failed.
+- **401:** Invalid email or password.
+
+---
+
+## GET /captains/profile
+
+This endpoint returns the authenticated captain's profile information.
+
+### Description
+
+- Requires a valid JWT token (sent via cookie or `Authorization` header).
+- Returns the captain data associated with the token.
+
+### Request
+
+- **Method:** GET
+- **Endpoint:** `/captains/profile`
+- **Headers:**  
+  `Authorization: Bearer <JWT_TOKEN>`  
+  or  
+  Cookie: `token=<JWT_TOKEN>`
+
+### Response
+
+- **Success (200 OK):**
+
+  ```json
+  {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    "email": "jane.smith@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+    // other captain fields
+  }
+  ```
+
+- **Error (401 Unauthorized):**
+
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+### Status Codes
+
+- **200:** Captain profile returned.
+- **401:** Invalid or missing authentication token.
+
+---
+
+## GET /captains/logout
+
+This endpoint logs out the authenticated captain.
+
+### Description
+
+- Requires a valid JWT token (sent via cookie or `Authorization` header).
+- Blacklists the token so it cannot be used again.
+- Clears the authentication cookie.
+
+### Request
+
+- **Method:** GET
+- **Endpoint:** `/captains/logout`
+- **Headers:**  
+  `Authorization: Bearer <JWT_TOKEN>`  
+  or  
+  Cookie: `token=<JWT_TOKEN>`
+
+### Response
+
+- **Success (200 OK):**
+
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+
+- **Error (401 Unauthorized):**
+
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+### Status Codes
+
+- **200:** Captain logged out successfully.
+- **401:** Invalid or missing authentication token.
+
+### Additional Notes
+
+- Ensure the `JWT_SECRET` environment variable is configured for JWT generation.
+- Logging out invalidates the token, enhancing security.
