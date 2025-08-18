@@ -1,18 +1,32 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import appLogo3 from '../assets/app logo3.png' 
+import appLogo3 from '../assets/app logo3.png'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { CaptainDataContext } from '../context/CaptainContext'
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [CaptainData, setCaptainData] = useState('')
+  const { captain, setCaptain } = React.useContext(CaptainDataContext)
+  const navigate = useNavigate()
 
-  const submitHandler = (e) => {
+
+
+  const submitHandler = async(e) => {
     e.preventDefault()
-    setCaptainData({
+    const captain ={
       email: email,
       password: password  
-    })
+    }
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captain)
+    if (response.status === 200) {  
+      const data = response.data
+      setCaptain(data.captain)
+      localStorage.setItem('token', data.token)
+      navigate('/captain-home')
+    }
     setEmail('')
     setPassword('')
   }
@@ -24,7 +38,7 @@ const CaptainLogin = () => {
         <img src={appLogo3} alt="Safar Logo" className="w-24 h-24 mb-2" />
 
         <form onSubmit={submitHandler} className="max-w-md">
-          <h3 className="text-lg font-semibold mb-2">What's your email</h3>
+          <h3 className="text-lg font-semibold mb-2">What's our Captain's email</h3>
           <input
             required
             value={email}

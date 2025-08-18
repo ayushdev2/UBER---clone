@@ -4,7 +4,10 @@ const { validationResult } = require('express-validator');
 const blacklistTokenModel = require('../models/blacklistToken.model');
 module.exports.registerUser = async (req, res, next) => {
     const errors = validationResult(req);
+    // console.log(req.body);
     if (!errors.isEmpty()) {
+        // console.error("Validation errors:", errors.array());
+
         return res.status(400).json({ errors: errors.array() });
     }
     
@@ -47,7 +50,7 @@ module.exports.loginUser = async (req, res, next) => {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const token = user.generteAuthToken();
+    const token = user.generateAuthToken();
     res.cookie('token', token,);
     
     res.status(200).json({token, user});
