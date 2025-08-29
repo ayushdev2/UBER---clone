@@ -1,32 +1,37 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const WaitingForDriver = (props) => {
+
+const FinishRide = (props) => {
   return (
     <div>
+      {/* Close Button */}
       <h5
         className='p-1 text-center w-[93%] absolute top-0'
-        onClick={() => {props.setWaitingForDriver(false)}}
+        onClick={() => props.setFinishRidePanel(false)}
       >
         <i className="text-3xl text-gray-400 ri-arrow-down-wide-line"></i>
       </h5>
 
-      <div className='flex items-center justify-between'>
-        <img
-          className='h-20'
-          src='https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_552,w_552/v1555367310/assets/30/51e602-10bb-4e65-b122-e394d80a9c47/original/Final_UberX.png'
-          alt=' '
-        /> 
-        <div className='text-right'>
-          <h2 className='text-lg font-medium'>Kajal</h2> 
-          <h4 className='text-xl font-semibold -mt-1 -mb-1'>DL 9C AZ 8855</h4> 
-          <p className='text-sm text-gray-600'>Tata Tigor</p>
-        </div>       
+      <h3 className='text-2xl font-semibold mb-5 mt-0'>Finish this Ride</h3>
+
+      {/* Rider Info */}
+      <div className='flex items-center justify-between p-4 border-2 border-yellow-400 rounded-lg mt-4'>
+        <div className='flex items-center gap-3'>
+          <img
+            className='h-12 w-12 rounded-full object-cover'
+            src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg"
+            alt="rider"
+          />
+          <h2 className='text-xl font-medium'>Harshita</h2>
+        </div>
+        <h5 className='text-lg font-semibold'>2.2 KM</h5>
       </div>
-      <div className='flex flex-col gap-2  items-center'>
 
-
+      {/* Ride Details */}
+      <div className='flex flex-col gap-2 items-center'>
         <div className='w-full mt-5'>
-          {/* Pickup address */}
+          {/* Pickup */}
           <div className='flex items-center gap-5 p-3 border-b-2'>
             <i className="text-lg ri-map-pin-user-fill"></i>
             <div>
@@ -35,7 +40,7 @@ const WaitingForDriver = (props) => {
             </div>
           </div>
 
-          {/* Destination address */}
+          {/* Destination */}
           <div className='flex items-center gap-5 p-3 border-b-2'>
             <i className="text-lg ri-map-pin-2-fill"></i>
             <div>
@@ -53,11 +58,17 @@ const WaitingForDriver = (props) => {
             </div>
           </div>
         </div>
-
-
+        <div className='mt-10 w-full'>
+           <Link
+            to='/captain-home'
+            className='w-full flex justify-center text-lg bg-green-600 text-white font-semibold p-3 rounded-lg'
+           >
+          Finish Ride
+          </Link>
+        </div>
       </div>
-    </div>    
+    </div>
   )
 }
 
-export default WaitingForDriver
+export default FinishRide
