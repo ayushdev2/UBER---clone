@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.leaflet-container {
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+.map-overlay {
+    z-index: 2;
+}
+.leaflet-control-locate {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    z-index: 1000;
+}
+
+/* Ensure controls are above other elements */
+.leaflet-bottom {
+    z-index: 1000 !important;
+}
+
+.leaflet-right {
+    z-index: 1000 !important;
+}
+.suggestions-dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}

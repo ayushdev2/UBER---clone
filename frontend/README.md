@@ -1,12 +1,116 @@
-# React + Vite
+# Uber Clone Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend application for an Uber clone service, built with Vite and integrated with OpenStreetMap.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Real-time Map Integration**
+  - Live location tracking
+  - Dynamic route visualization
+  - Address autocomplete
+  - Interactive map markers
 
-## Expanding the ESLint configuration
+- **User Features**
+  - Authentication (Login/Signup)
+  - Book rides
+  - Track ride status
+  - View ride history
+  - Real-time driver location
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Captain (Driver) Features**
+  - Authentication system
+  - Accept/Reject rides
+  - Navigate to pickup locations
+  - Manage ride completions
+  - Track earnings
+
+## Tech Stack
+
+- React 19.1.0 with Vite
+- Tailwind CSS for styling
+- React Router for navigation
+- Leaflet/React-Leaflet for maps
+- Context API for state management
+- Axios for API requests
+
+## Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/       # Reusable UI components
+│   │   ├── Map.jsx
+│   │   ├── LocationSearchPanel.jsx
+│   │   └── VehiclePanel.jsx
+│   ├── pages/           # Route components
+│   │   ├── Home.jsx
+│   │   └── Riding.jsx
+│   ├── context/         # React context providers
+│   ├── utils/           # Utility functions
+│   └── assets/          # Static assets
+```
+
+## Getting Started
+
+1. **Installation**
+```bash
+npm install
+```
+
+2. **Development**
+```bash
+npm run dev
+```
+
+3. **Build**
+```bash
+npm run build
+```
+
+4. **Preview**
+```bash
+npm run preview
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=your_backend_api_url
+```
+
+## API Status Codes
+
+- **200**: Success
+- **201**: Resource created
+- **400**: Bad request
+- **401**: Unauthorized
+- **403**: Forbidden
+- **404**: Not found
+- **500**: Server error
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- OpenStreetMap for map data
+- React-Leaflet for map integration
+- Tailwind CSS for styling
